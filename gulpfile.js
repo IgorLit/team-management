@@ -8,6 +8,6 @@ gulp.task('tdd', ['jest'], () => {
 });
 
 gulp.task('jest', () => {
-    return gulp.src('__tests__')
+    return gulp.src('./tests')
         .pipe(jest());
 });
