@@ -13,8 +13,8 @@ class ApiController{
     }
 
     _registerRoutes(){
-        this.router.use('/workers', this._workersController);
-        this.router.use('/teams', this._teamsController);
+        this.router.use('/workers', this._workersController.router);
+        this.router.use('/teams', this._teamsController.router);
     }
 }
 
