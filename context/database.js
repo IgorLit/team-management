@@ -3,7 +3,7 @@ const config = require('../config.json');
 const Team = require('../models/team');
 const Worker = require('../models/worker');
 
-module.exports = class DatabaseContext {
+class DatabaseContext {
 
     constructor(Sequelize) {
         this.sequelize = new Sequelize(
@@ -39,3 +39,4 @@ module.exports = class DatabaseContext {
         this.worker.belongsTo(this.team);
     }
 }
+module.exports = DatabaseContext;

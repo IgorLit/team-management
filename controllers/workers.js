@@ -1,60 +1,69 @@
 'use strict';
+
 const express = require('express');
 
-module.exports = class WorkersController {
+class WorkersController {
     constructor(workersService) {
-        this._workersService = workersService;
-        this._registerRoutes = registerRoutes;
-        this._router = express.Router();
-        this._routes = {
-            '/:id': [{method: 'get', cb: read}, {method: 'delete', cb: del}, {method: 'put', cb: update}]
-        };
+        this._service = workersService;
+        this.router = express.Router();
+        this._registerRoutes();
+    }
+
+    _getRoutes(){
+        return {
+            '/': [{method: 'get', cb: this.readAll}, {method: 'post', cb: this.create}],
+            '/:id': [{method: 'get', cb: this.read}, {method: 'delete', cb: this.del}, {method: 'put', cb: this.update}]
+        }
     }
 
     readAll(req, res) {
-        service.readChunk(req.params)
+        this._service.readChunk(req.params)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
     read(req, res) {
-        service.read(req.params.id)
+        this._service.read(req.params.id)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
     create(req, res) {
-        service.create(req.body)
+        this._service.create(req.body)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
     update(req, res) {
-        service.update(req)
+        this._service.update(req)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
     del(req, res) {
         const id = req.params.id;
-        service.delete(id)
+        this._service.delete(id)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
-    registerRoutes() {
-        for (let route in this._routes) {
-            if (!this.routes.hasOwnProperty(route)) {
+    _registerRoutes() {
+        let routes = this._getRoutes();
+        for (let route in routes) {
+            if (!routes.hasOwnProperty(route)) {
                 continue;
             }
 
-            let handlers = this._routes[route];
+            let handlers = routes[route];
 
             if (handlers === undefined) continue;
 
             for (let handler of handlers) {
-                this._router[handler.method](route, handler.cb);
+                this.router[handler.method](route, handler.cb);
             }
         }
     }
-};
+
+}
+
+module.exports =  WorkersController;

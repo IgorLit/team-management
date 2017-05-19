@@ -3,14 +3,17 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
+const DatabaseContext = require('./context/database');
+const TeamsService = require('./services/teams');
+const WorkersService = require('./services/workers');
+const ApiController = require('./controllers/api');
+const dbcontext = new DatabaseContext(Sequelize);
 
-const dbcontext = require('./context/database')(Sequelize);
 
+const teamsService = new TeamsService(dbcontext.team, dbcontext.worker);
+const workersService = new WorkersService(dbcontext.worker);
 
-const teamsService = require('./services/teams')(dbcontext.team, dbcontext.worker);
-const workersService = require('./services/workers')(dbcontext.worker);
-
-const apiController = require('./controllers/api')(workersService, teamsService);
+const apiController = new ApiController(workersService, teamsService);
 
 
 const app = express();
@@ -21,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'));
 
 
-app.use('/api', apiController);
+app.use('/api', apiController.router);
 
 app.set('port', (process.env.PORT || 3000));
 dbcontext.sequelize.sync()
