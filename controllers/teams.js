@@ -7,6 +7,11 @@ class TeamsController{
         this._workersService = workersService;
         this._teamsService = teamsService;
         this.router = express.Router();
+        this.readAll = this.readAll.bind(this);
+        this.read = this.read.bind(this);
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.del = this.del.bind(this);
         this._registerRoutes();
     }
 
@@ -43,7 +48,7 @@ class TeamsController{
 
     del(req, res) {
         const id = req.params.id;
-        this._teamsService.delete(id)
+        this._teamsService.del(id)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }

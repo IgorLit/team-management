@@ -7,12 +7,11 @@ const DatabaseContext = require('./context/database');
 const TeamsService = require('./services/teams');
 const WorkersService = require('./services/workers');
 const ApiController = require('./controllers/api');
+
+
 const dbcontext = new DatabaseContext(Sequelize);
-
-
 const teamsService = new TeamsService(dbcontext.team, dbcontext.worker);
 const workersService = new WorkersService(dbcontext.worker);
-
 const apiController = new ApiController(workersService, teamsService);
 
 

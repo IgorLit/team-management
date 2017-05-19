@@ -55,6 +55,10 @@ class BaseService {
         return this.repository.destroy({where: {id: id}})
             .then(() => ({success: true}));
     }
+
+    test(){
+        console.log('test is called');
+    }
 }
 
 module.exports = BaseService;

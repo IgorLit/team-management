@@ -39,4 +39,4 @@ class DatabaseContext {
         this.worker.belongsTo(this.team);
     }
 }
-module.exports = DatabaseContext;
+module.exports = DatabaseContext

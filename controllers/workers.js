@@ -6,10 +6,15 @@ class WorkersController {
     constructor(workersService) {
         this._service = workersService;
         this.router = express.Router();
+        this.readAll = this.readAll.bind(this);
+        this.read = this.read.bind(this);
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.del = this.del.bind(this);
         this._registerRoutes();
     }
 
-    _getRoutes(){
+    _getRoutes() {
         return {
             '/': [{method: 'get', cb: this.readAll}, {method: 'post', cb: this.create}],
             '/:id': [{method: 'get', cb: this.read}, {method: 'delete', cb: this.del}, {method: 'put', cb: this.update}]
@@ -17,6 +22,7 @@ class WorkersController {
     }
 
     readAll(req, res) {
+        this._service.test();
         this._service.readChunk(req.params)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
@@ -64,6 +70,6 @@ class WorkersController {
         }
     }
 
-}
+};
 
-module.exports =  WorkersController;
+module.exports = WorkersController;
