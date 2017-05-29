@@ -40,8 +40,8 @@ class WorkersService extends BaseService {
 
     _getIntersection(first, second){ //12.00 - 20.00
         try{
-            first = first.replace(' ', '');
-            second = second.replace(' ', '');
+            first = first.replace(/ /g,'');
+            second = second.replace(/ /g,'');
             let start = first.split('-')[0] > second.split('-')[0] ? first.split('-')[0] : second.split('-')[0];
             let end = first.split('-')[1] > second.split('-')[1] ? second.split('-')[1] : first.split('-')[1];
             return  start < end ? `${start}-${end}` : 'none';
