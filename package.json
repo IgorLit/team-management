@@ -4,7 +4,8 @@
   "description": "Tdd",
   "main": "index.js",
   "scripts": {
-    "test": "gulp tdd"
+    "start": "node index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,9 @@
   "homepage": "https://github.com/IgorLit/team-management#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-jest": "^1.0.0",
-    "jest-cli": "^20.0.3"
+    "babel-jest": "^19.0.0",
+    "babel-preset-es2017": "^6.24.1",
+    "jest": "^19.0.2"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -29,5 +31,9 @@
     "lodash": "^4.17.4",
     "mysql": "^2.13.0",
     "sequelize": "^3.30.4"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node"
   }
 }

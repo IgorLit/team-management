@@ -30,48 +30,47 @@ class WorkersController {
 
     readAll(req, res) {
         this._service.readChunk(req.params)
-            .then((data) => res.json(data))
-            .catch((err) => res.send({error: err.message}));
+            .then(data => res.json(data))
+            .catch(err => res.send({error: err.message}));
     }
 
     setContact(req, res) {
         this._service.setContact(req.params.id, req.body.id)
-            .then((data) => {
+            .then(data => {
                 return res.json(data)
             })
-            .catch((err) => res.send({error: err.message}));
+            .catch(err => res.send({error: err.message}));
     }
-    getTimeIntersection(req, res){
+
+    getTimeIntersection(req, res) {
         this._service.getTimeIntersection(req.params.yourId, req.params.teammateId)
-            .then((data) => {
-                return res.json(data)
-            })
-            .catch((err) => res.send({error: err.message}));
+            .then(data => res.json(data))
+            .catch(err => res.send({error: err.message}));
     }
 
     read(req, res) {
         this._service.read(req.params.id)
             .spread((worker, contacts) => res.json(_.merge({worker: worker.dataValues}, {contacts})))
-            .catch((err) => res.send({error: err.message}));
+            .catch(err => res.send({error: err.message}));
     }
 
     create(req, res) {
         this._service.create(req.body)
-            .then((data) => res.json(_.head(data)))
-            .catch((err) => res.send({error: err.message}));
+            .then(data => res.json(_.head(data)))
+            .catch(err => res.send({error: err.message}));
     }
 
     update(req, res) {
         this._service.update(req.params.id, req.body)
-            .then((data) => res.json(data))
-            .catch((err) => res.send({error: err.message}));
+            .then(data => res.json(data))
+            .catch(err => res.send({error: err.message}));
     }
 
     del(req, res) {
         const id = req.params.id;
         this._service.del(id)
-            .then((data) => res.json(data))
-            .catch((err) => res.send({error: err.message}));
+            .then(data => res.json(data))
+            .catch(err => res.send({error: err.message}));
     }
 
     _registerRoutes() {

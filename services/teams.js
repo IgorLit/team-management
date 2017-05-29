@@ -4,7 +4,7 @@ const BaseService = require('./base');
 
 class TeamsService extends BaseService{
 
-    constructor(teamsRepository, workersRepository){
+    constructor(teamsRepository){
         super(teamsRepository);
     }
 
