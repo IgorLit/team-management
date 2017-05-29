@@ -39,6 +39,7 @@ class DatabaseContext {
     _createLinks(){
         this.team.hasMany(this.worker);
         this.worker.belongsTo(this.team);
+        this.worker.belongsToMany(this.worker, { as: 'user',foreignKey: 'usertId', through: this.contacts});
         this.worker.belongsToMany(this.worker, { as: 'contact',foreignKey: 'contactId', through: this.contacts});
     }
 }
