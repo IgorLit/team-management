@@ -52,7 +52,7 @@ class BaseService {
         if (isNaN(id)) {
             return Promise.reject('invalid id');
         }
-        return this.repository.destroy({where: {id: id}})
+        return this._repository.destroy({where: {id: id}})
             .then(() => ({success: true}));
     }
 

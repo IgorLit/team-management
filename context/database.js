@@ -2,6 +2,7 @@
 const config = require('../config.json');
 const Team = require('../models/team');
 const Worker = require('../models/worker');
+const Contacts = require('../models/contacts');
 
 class DatabaseContext {
 
@@ -10,15 +11,16 @@ class DatabaseContext {
             config.db.name,
             config.db.user,
             config.db.password,
-            this._getSequelizeOptions(config)
+            DatabaseContext._getSequelizeOptions(config)
         );
         this.team = Team(Sequelize, this.sequelize);
         this.worker = Worker(Sequelize, this.sequelize);
+        this.contacts = Contacts(Sequelize, this.sequelize);
         this._createLinks();
     }
 
 
-    _getSequelizeOptions(config) {
+    static _getSequelizeOptions(config) {
         return {
             host: config.db.host,
             dialect: config.db.dialect,
@@ -37,6 +39,7 @@ class DatabaseContext {
     _createLinks(){
         this.team.hasMany(this.worker);
         this.worker.belongsTo(this.team);
+        this.worker.belongsToMany(this.worker, { as: 'contact',foreignKey: 'contactId', through: this.contacts});
     }
 }
-module.exports = DatabaseContext
+module.exports = DatabaseContext;

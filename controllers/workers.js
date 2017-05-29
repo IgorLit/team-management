@@ -41,14 +41,14 @@ class WorkersController {
     }
 
     update(req, res) {
-        this._service.update(req)
+        this._service.update(req.params.id, req.body)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
 
     del(req, res) {
         const id = req.params.id;
-        this._service.delete(id)
+        this._service.del(id)
             .then((data) => res.json(data))
             .catch((err) => res.send({error: err.message}));
     }
